@@ -1,0 +1,281 @@
+<html><head><base href="." /><title>Creator Application Form</title>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #00c6fb, #005bea);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .question-group {
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .question-group:hover {
+      transform: translateX(10px);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: #2d3436;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    input[type="text"]:focus {
+      border-color: #005bea;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 91, 234, 0.1);
+    }
+    
+    #submitBtn {
+      background: linear-gradient(45deg, #00c6fb, #005bea);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+      width: 100%;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+    
+    #submitBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 91, 234, 0.2);
+    }
+    
+    #submitBtn:active {
+      transform: translateY(0);
+    }
+    
+    .success-message {
+      color: #00b894;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+      <form id="questionForm">
+
+        <div class="question-group">
+          <label for="channelUrl">Discord Name:</label>
+          <input type="text" id="discordname" required>
+        </div>
+
+
+        <div class="question-group">
+          <label for="platform">What is your main media platform?</label>
+          <input type="text" id="platform" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="followers">How many subscribers/followers do you have?</label>
+          <input type="text" id="followers" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="views">How many average views do you have?</label>
+          <input type="text" id="views" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="jamppeli">Do you think jamppeli is the best Dev?</label>
+          <input type="text" id="jamppeli" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="lastPost">When did you last post something?</label>
+          <input type="text" id="lastPost" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="whyCreator">Why would you like to become a media creator?</label>
+          <input type="text" id="whyCreator" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="experience">Have you been a media creator before?</label>
+          <input type="text" id="experience" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="skills">Are you good at cutting/creating thumbnails?</label>
+          <input type="text" id="skills" required>
+        </div>
+        
+        <div class="question-group">
+          <label for="channelUrl">Your channel URL:</label>
+          <input type="text" id="channelUrl" required>
+        </div>
+        
+        <button type="submit" id="submitBtn">Send Application</button>
+      </form>
+      <div class="success-message">Thanks for submitting your application! ✨</div>
+    </div>
+    
+    <script>
+    const form = document.getElementById('questionForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.querySelector('.success-message');
+    const inputs = form.querySelectorAll('input');
+    
+    function checkInputs() {
+      let allFilled = true;
+      inputs.forEach(input => {
+        if (!input.value.trim()) {
+          allFilled = false;
+        }
+      });
+      submitBtn.style.display = allFilled ? 'block' : 'none';
+    }
+    
+    inputs.forEach(input => {
+      input.addEventListener('input', checkInputs);
+    });
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const webhookURL = 'https://discordapp.com/api/webhooks/1324027528829997166/8zQiWvUmEYY9h5li9MnjjoXiS-YkHH6faSkbiE6J7dibkIDwk0gKsbdlg08bZTajCOWU';
+      
+      const formData = {
+        embeds: [{
+          title: "📝 New Creator Application",
+          color: 3447003,
+          fields: [
+
+           {
+              name: "🤖 Discord name",
+              value: document.getElementById('discordname').value,
+              inline: true
+            },
+            {
+              name: "🎯 Platform",
+              value: document.getElementById('platform').value,
+              inline: true
+            },
+            {
+              name: "👥 Followers/Subscribers",
+              value: document.getElementById('followers').value,
+              inline: true
+            },
+            {
+              name: "👀 Average Views",
+              value: document.getElementById('views').value,
+              inline: true
+            },
+            {
+              name: "💫 Jamppeli Best Dev?",
+              value: document.getElementById('jamppeli').value,
+              inline: true
+            },
+            {
+              name: "📅 Last Post",
+              value: document.getElementById('lastPost').value,
+              inline: true
+            },
+            {
+              name: "🎯 Why Creator",
+              value: document.getElementById('whyCreator').value,
+              inline: false
+            },
+            {
+              name: "📚 Prior Experience",
+              value: document.getElementById('experience').value,
+              inline: true
+            },
+            {
+              name: "🎨 Editing Skills",
+              value: document.getElementById('skills').value,
+              inline: true
+            },
+            {
+              name: "🔗 Channel URL",
+              value: document.getElementById('channelUrl').value,
+              inline: false
+            }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: "Creator Application System"
+          }
+        }]
+      };
+    
+      try {
+        const response = await fetch(webhookURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+    
+        if (response.ok) {
+          submitBtn.style.display = 'none';
+          successMessage.style.display = 'block';
+          form.reset();
+        } else {
+          throw new Error('Failed to send message');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to send message. Please try again.');
+      }
+    });
+    </script>
+    </body></html>
